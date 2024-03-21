@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Georgia, serif; /* Alterado para Georgia */
+            background-color: #222; /* Alterado para cinza escuro */
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column; /* Adicionado para centralizar verticalmente */
+            height: 100vh;
+        }
+
+        .login-form, .signup-form {
+            background-color: #000;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .login-form h2, .signup-form h2 {
+            margin-bottom: 20px;
+        }
+
+        .login-form input, .signup-form input {
+            width: calc(100% - 24px);
+            padding: 12px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 20px;
+            background-color: #333;
+            color: #fff;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        .login-form button, .signup-form button {
+            width: calc(100% - 24px);
+            padding: 12px;
+            border: none;
+            border-radius: 20px;
+            background-color: #fff;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            outline: none;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .login-form button:hover, .signup-form button:hover {
+            background-color: #555;
+            color: #fff;
+        }
+
+        .signup-link {
+            margin-top: 20px;
+            color: #fff;
+        }
+
+        .signup-link a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+
+        .social-login {
+            margin-top: 20px;
+        }
+
+        .social-login button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 20px;
+            background-color: #3b5998; /* Azul do Facebook */
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            outline: none;
+            transition: background-color 0.3s, color 0.3s;
+            margin-bottom: 10px;
+        }
+
+        .social-login button.google {
+            background-color: #db4437; /* Vermelho do Google */
+        }
+
+        .social-login button.apple {
+            background-color: #000; /* Preto da Apple */
+        }
+
+        .social-login button:hover {
+            filter: brightness(90%);
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <form class="login-form" id="loginForm" action="">
+        <h2>Login</h2>
+        <input type="text" placeholder="Usuário" required>
+        <input type="password" placeholder="Senha" required>
+        <button type="submit">Entrar</button>
+        <div class="signup-link">
+            <span>Não tem uma conta? <a href="#" id="signupLink">Cadastre-se</a></span>
+        </div>
+        <div class="social-login">
+            <button class="facebook" onclick="window.location.href = 'https://www.facebook.com/login/?privacy_mutation_token=eyJ0eXBlIjowLCJjcmVhdGlvbl90aW1lIjoxNzExMDYyMjA3LCJjYWxsc2l0ZV9pZCI6MjY5NTQ4NDUzMDcyMDk1MX0%3D';">Entrar com Facebook</button>
+            <button class="google" onclick="window.location.href = 'https://accounts.google.com/InteractiveLogin/identifier?elo=1&ifkv=ARZ0qKK8VI42Sb8RJxTPvef2Tvq2IU6qJWjfMKMCDsQnpZ4ZQ1JjlR41xY9tQGigH2-JfaaC18_oEg&theme=mn&ddm=0&flowName=GlifWebSignIn&flowEntry=ServiceLogin';">Entrar com Google</button>
+            <button class="apple" onclick="window.location.href = 'https://appleid.apple.com/sign-in';">Entrar com Apple</button>
+        </div>
+    </form>
+
+    <form class="signup-form hidden" id="signupForm" action="">
+        <h2>Cadastro</h2>
+        <input type="text" id="signupUsername" placeholder="Usuário" required>
+        <input type="password" id="signupPassword" placeholder="Senha" required>
+        <input type="email" id="signupEmail" placeholder="Email" required>
+        <button type="submit">Cadastrar</button>
+        <div class="signup-link">
+            <span>Já tem uma conta? <a href="#" id="loginLink">Faça login</a></span>
+        </div>
+    </form>
+
+    <script>
+        const loginForm = document.getElementById('loginForm');
+        const signupForm = document.getElementById('signupForm');
+        const signupLink = document.getElementById('signupLink');
+        const loginLink = document.getElementById('loginLink');
+
+        signupLink.addEventListener('click', function(event) {
+            event.preventDefault();
+            loginForm.classList.add('hidden');
+            signupForm.classList.remove('hidden');
+        });
+
+        loginLink.addEventListener('click', function(event) {
+            event.preventDefault();
+            signupForm.classList.add('hidden');
+            loginForm.classList.remove('hidden');
+        });
+
+        signupForm.addEventListener('submit', function(event) {
+            const username = document.getElementById('signupUsername').value;
+            const password = document.getElementById('signupPassword').value;
+            const email = document.getElementById('signupEmail').value;
+
+            if (!username || !password || !email) {
+                event.preventDefault();
+                alert('Por favor, preencha todos os campos.');
+            } else {
+                alert('Cadastro realizado com sucesso! Você será redirecionado para a tela de login.');
+                loginForm.classList.remove('hidden');
+                signupForm.classList.add('hidden');
+                document.getElementById('loginForm').reset();
+                setTimeout(function() {
+                    window.location.reload();
+                }, 2000); // Recarrega a página após 2 segundos
+            }
+        });
+    </script>
+</body>
+</html>
